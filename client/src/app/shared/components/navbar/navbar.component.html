@@ -1,0 +1,38 @@
+<header class="nav" [class.scrolled]="scrolled()">
+  <div class="nav-inner container">
+    <a routerLink="/" class="brand" (click)="closeMobile()">
+      <span class="brand-mark">🌱</span>
+      <span class="brand-name">EcoLoop</span>
+    </a>
+
+    @if (auth.isLoggedIn()) {
+      <nav class="links">
+        <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/log" routerLinkActive="active">Log Habit</a>
+        <a routerLink="/stats" routerLinkActive="active">Stats</a>
+        <a routerLink="/profile" routerLinkActive="active">Profile</a>
+      </nav>
+
+      <a routerLink="/profile" class="avatar-btn">
+        <img [src]="auth.user()?.avatarUrl" [alt]="auth.user()?.name" />
+      </a>
+
+      <button class="burger" (click)="toggleMobile()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    }
+
+    @if (!auth.isLoggedIn()) {
+      <a routerLink="/" class="ghost-cta">Sign in</a>
+    }
+  </div>
+
+  @if (mobileOpen() && auth.isLoggedIn()) {
+    <div class="mobile-menu" @menuAnim>
+      <a routerLink="/dashboard" (click)="closeMobile()">Dashboard</a>
+      <a routerLink="/log" (click)="closeMobile()">Log Habit</a>
+      <a routerLink="/stats" (click)="closeMobile()">Stats</a>
+      <a routerLink="/profile" (click)="closeMobile()">Profile</a>
+    </div>
+  }
+</header>

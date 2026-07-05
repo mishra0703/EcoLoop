@@ -1,0 +1,119 @@
+/* ==========================================================================
+   EcoLoop — Design Tokens
+   Palette named after what it evokes in the eco-habit world:
+   canopy (deep emerald), moss (mid green), sprout (bright pop green),
+   mist (glass surface), soil (ink text), clay (warm neutral shadow base)
+   ========================================================================== */
+
+:root {
+  --canopy: #234B3B;
+  --canopy-soft: #2F6B4F;
+  --moss: #4C8B6B;
+  --sprout: #7ED99A;
+  --sprout-deep: #4FBE7C;
+
+  --bg: #F2F4EF;
+  --bg-alt: #EAEEE6;
+  --mist: rgba(255, 255, 255, 0.55);
+  --mist-strong: rgba(255, 255, 255, 0.72);
+  --mist-border: rgba(255, 255, 255, 0.65);
+
+  --soil: #1C2621;
+  --soil-soft: #4B5A52;
+  --soil-faint: #7C8B82;
+
+  --clay-shadow: rgba(35, 75, 59, 0.12);
+  --clay-shadow-strong: rgba(35, 75, 59, 0.20);
+
+  --danger: #C1543D;
+
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(126, 217, 154, 0.18), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(47, 107, 79, 0.10), transparent 55%),
+    var(--bg);
+  color: var(--soil);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  color: var(--canopy);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0; line-height: 1.55; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+::selection { background: var(--sprout); color: var(--canopy); }
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Shared glass surface utility */
+.glass {
+  background: var(--mist);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--mist-border);
+  box-shadow: 0 8px 32px var(--clay-shadow);
+}
+
+.mono { font-family: var(--font-mono); }
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(76, 139, 107, 0.35); border-radius: 10px; }
+::-webkit-scrollbar-track { background: transparent; }

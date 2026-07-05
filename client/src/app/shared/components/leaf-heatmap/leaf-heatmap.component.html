@@ -1,0 +1,42 @@
+<div class="heatmap-scroll">
+  <div class="months">
+    @for (m of monthLabels(); track m.index) {
+      <span class="month-label" [style.grid-column]="m.index + 1">{{ m.label }}</span>
+    }
+  </div>
+
+  <div class="grid">
+    @for (week of weeks(); track $index) {
+      <div class="col">
+        @for (day of week; track day?.date ?? $index) {
+          @if (day) {
+            <button
+              type="button"
+              class="cell"
+              [attr.data-level]="day.level"
+              (mouseenter)="showTooltip($event, day)"
+              (mouseleave)="hideTooltip()"
+              [attr.aria-label]="day.date + ': ' + day.count + ' habits logged'"
+            ></button>
+          } @else {
+            <span class="cell empty"></span>
+          }
+        }
+      </div>
+    }
+  </div>
+
+  @if (tooltip(); as t) {
+    <div class="tip" [style.left.px]="t.x" [style.top.px]="t.y" @tooltipAnim>
+      <strong>{{ t.count }}</strong> habit{{ t.count === 1 ? '' : 's' }} · {{ t.date }}
+    </div>
+  }
+</div>
+
+<div class="legend">
+  <span>Less</span>
+  @for (level of [0,1,2,3,4]; track level) {
+    <span class="cell legend-cell" [attr.data-level]="level"></span>
+  }
+  <span>More</span>
+</div>

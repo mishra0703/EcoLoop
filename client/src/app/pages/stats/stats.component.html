@@ -1,0 +1,75 @@
+<section class="container stats-page" @pageEnter>
+  <div class="stats-head reveal">
+    <span class="eyebrow">Your impact</span>
+    <h1>Stats &amp; history</h1>
+  </div>
+
+  <div class="top-row">
+    <eco-glass-card class="summary-card reveal" [delay]="60">
+      <span class="card-label">Total CO₂ saved</span>
+      <span class="big-num mono">{{ totalCo2() }} <small>{{ unit }}</small></span>
+    </eco-glass-card>
+    <eco-glass-card class="summary-card reveal" [delay]="110">
+      <span class="card-label">{{ monthLabel() }}</span>
+      <span class="big-num mono">{{ monthCo2() }} <small>{{ unit }}</small></span>
+    </eco-glass-card>
+    <eco-glass-card class="summary-card reveal" [delay]="160">
+      <span class="card-label">Longest streak</span>
+      <span class="big-num mono">{{ habits.longestStreak() }} <small>days</small></span>
+    </eco-glass-card>
+  </div>
+
+  <eco-glass-card class="chart-card reveal" [delay]="210">
+    <h3>Weekly completions</h3>
+    <div class="bar-chart">
+      @for (bar of weeklyTrend(); track bar.label) {
+        <div class="bar-col">
+          <div class="bar" [style.height.%]="bar.heightPct">
+            <span class="bar-value mono">{{ bar.count }}</span>
+          </div>
+          <span class="bar-label">{{ bar.label }}</span>
+        </div>
+      }
+    </div>
+  </eco-glass-card>
+
+  <div class="mid-row">
+    <eco-glass-card class="breakdown-card reveal" [delay]="260">
+      <h3>Top habits</h3>
+      <div class="breakdown-list">
+        @for (row of habitBreakdown(); track row.habit?._id) {
+          <div class="breakdown-row">
+            <span class="b-icon">{{ row.habit?.icon }}</span>
+            <span class="b-name">{{ row.habit?.name }}</span>
+            <div class="b-track"><div class="b-fill" [style.width.%]="row.pct"></div></div>
+            <span class="b-count mono">{{ row.count }}</span>
+          </div>
+        }
+      </div>
+    </eco-glass-card>
+
+    <eco-glass-card class="calendar-card reveal" [delay]="310">
+      <div class="cal-head">
+        <button type="button" (click)="shiftMonth(-1)" aria-label="Previous month">‹</button>
+        <h3>{{ monthLabel() }}</h3>
+        <button type="button" (click)="shiftMonth(1)" aria-label="Next month">›</button>
+      </div>
+      <div class="cal-grid dow">
+        @for (d of ['S','M','T','W','T','F','S']; track $index) {
+          <span>{{ d }}</span>
+        }
+      </div>
+      <div class="cal-grid">
+        @for (cell of calendarDays(); track $index) {
+          @if (cell.day) {
+            <span class="cal-cell" [class.has-log]="cell.count > 0" [attr.title]="cell.count + ' habits'">
+              {{ cell.day }}
+            </span>
+          } @else {
+            <span class="cal-cell empty"></span>
+          }
+        }
+      </div>
+    </eco-glass-card>
+  </div>
+</section>

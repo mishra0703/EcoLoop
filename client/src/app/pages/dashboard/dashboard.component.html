@@ -1,0 +1,64 @@
+<eco-confetti [active]="confettiActive()"></eco-confetti>
+
+<section class="container dash" @pageEnter>
+  <div class="dash-head reveal">
+    <div>
+      <span class="eyebrow">Welcome back</span>
+      <h1>Hey {{ firstName }}, here's your loop.</h1>
+    </div>
+    <a routerLink="/log" class="btn-primary">
+      <span>Log today</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="dash-grid">
+    <eco-glass-card class="stat-card reveal" [delay]="60">
+      <span class="card-label">Current streak</span>
+      <div class="streak-row">
+        <eco-streak-counter [value]="habits.currentStreak()" class="big-num"></eco-streak-counter>
+        <span class="unit">days</span>
+        @if (milestoneBadge(); as badge) {
+          <span class="badge">{{ badge }}</span>
+        }
+      </div>
+      <span class="sub-label">Longest: {{ habits.longestStreak() }} days</span>
+    </eco-glass-card>
+
+    <eco-glass-card class="stat-card reveal" [delay]="120">
+      <span class="card-label">CO₂ saved</span>
+      <div class="streak-row">
+        <eco-streak-counter [value]="co2Display" [decimals]="1" class="big-num"></eco-streak-counter>
+        <span class="unit">{{ unit }}</span>
+      </div>
+      <span class="sub-label">Estimated across all logged habits</span>
+    </eco-glass-card>
+
+    <eco-glass-card class="stat-card reveal" [delay]="180">
+      <span class="card-label">Today</span>
+      <div class="streak-row">
+        <eco-streak-counter [value]="habits.todaysLogs().length"></eco-streak-counter>
+        <span class="unit">/ {{ habits.habits().length }} habits</span>
+      </div>
+      <a routerLink="/log" class="sub-link">Log the rest →</a>
+    </eco-glass-card>
+  </div>
+
+  <eco-glass-card class="nudge-card reveal" [delay]="220">
+    <span class="nudge-icon">🌿</span>
+    <div>
+      <span class="card-label">From EcoLoop</span>
+      <p class="nudge-text">{{ nudge() }}</p>
+    </div>
+  </eco-glass-card>
+
+  <eco-glass-card class="heatmap-card reveal" [delay]="280">
+    <div class="heatmap-head">
+      <div>
+        <h3>Your year, at a glance</h3>
+        <span class="sub-label">Every cell is a day you showed up</span>
+      </div>
+    </div>
+    <eco-leaf-heatmap [cells]="habits.heatmapCells()"></eco-leaf-heatmap>
+  </eco-glass-card>
+</section>

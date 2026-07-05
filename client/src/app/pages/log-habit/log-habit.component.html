@@ -1,0 +1,88 @@
+<eco-confetti [active]="celebrate()"></eco-confetti>
+
+<section class="container log-page">
+  <div class="log-head">
+    <span class="eyebrow">{{ habits.todayStr }}</span>
+    <h1>What did you do for the planet today?</h1>
+    <p class="lede">Check off what applies. Every tick updates your streak and CO₂ total instantly.</p>
+  </div>
+
+  <div class="checklist glass" @listEnter>
+    @for (habit of habits.habits(); track habit._id) {
+      <div class="habit-row" [class.done]="habits.isCompletedToday(habit._id)">
+        <button
+          type="button"
+          class="check"
+          [attr.aria-pressed]="habits.isCompletedToday(habit._id)"
+          (click)="toggle(habit)"
+        >
+          <span
+            class="check-box"
+            [@checkPop]="habits.isCompletedToday(habit._id)"
+            [class.checked]="habits.isCompletedToday(habit._id)"
+          >
+            @if (habits.isCompletedToday(habit._id)) {
+              <svg viewBox="0 0 24 24" width="14" height="14"><path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M4 12l5 5L20 6"/></svg>
+            }
+          </span>
+        </button>
+
+        <span class="habit-icon">{{ habit.icon }}</span>
+        <span class="habit-name">{{ habit.name }}</span>
+
+        <span class="habit-co2 mono">−{{ habit.co2Estimate }} kg</span>
+
+        @if (habit.isCustom) {
+          <button type="button" class="remove-btn" (click)="removeCustom(habit)" aria-label="Remove custom habit">✕</button>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="custom-card glass">
+    <h3>Add a custom habit</h3>
+    <p class="hint">Gemini checks it's genuinely eco-related before it's added.</p>
+
+    <div class="custom-input-row">
+      <input
+        type="text"
+        placeholder="e.g. Composted kitchen scraps, biked to work…"
+        [(ngModel)]="customInput"
+        [ngModelOptions]="{ standalone: true }"
+        [disabled]="validationState() === 'checking'"
+        (keyup.enter)="submitCustom()"
+      />
+      <button
+        type="button"
+        class="btn-primary"
+        (click)="submitCustom()"
+        [disabled]="!customInput().trim() || validationState() === 'checking'"
+      >
+        @if (validationState() === 'checking') {
+          <span class="spinner"></span>
+          <span>Checking…</span>
+        } @else {
+          <span>Add habit</span>
+        }
+      </button>
+    </div>
+
+    @if (validationState() === 'rejected') {
+      <div class="feedback rejected" @feedbackAnim>
+        <span class="feedback-icon">⚠️</span>
+        <div>
+          <p><strong>{{ rejectReason() }}</strong></p>
+          <p class="suggestion">{{ rejectSuggestion() }}</p>
+        </div>
+        <button type="button" class="dismiss" (click)="dismissRejection()">Try again</button>
+      </div>
+    }
+
+    @if (validationState() === 'accepted') {
+      <div class="feedback accepted" @feedbackAnim>
+        <span class="feedback-icon">✅</span>
+        <p>Added — genuinely eco-friendly, nice find.</p>
+      </div>
+    }
+  </div>
+</section>

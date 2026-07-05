@@ -1,0 +1,119 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 18px 0;
+  transition: padding 220ms var(--ease-out-quart), background 220ms ease;
+
+  &.scrolled {
+    padding: 10px 0;
+    background: var(--mist-strong);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-bottom: 1px solid var(--mist-border);
+    box-shadow: 0 4px 24px var(--clay-shadow);
+  }
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: auto;
+}
+
+.brand-mark {
+  font-size: 22px;
+  filter: drop-shadow(0 2px 4px rgba(35, 75, 59, 0.2));
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--canopy);
+}
+
+.links {
+  display: flex;
+  gap: 6px;
+
+  a {
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--soil-soft);
+    transition: background 180ms ease, color 180ms ease;
+
+    &:hover { background: rgba(76, 139, 107, 0.10); color: var(--canopy); }
+    &.active { background: var(--canopy); color: #fff; }
+  }
+
+  @media (max-width: 760px) { display: none; }
+}
+
+.avatar-btn {
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--mist-border);
+    object-fit: cover;
+    display: block;
+    transition: transform 180ms var(--ease-spring), border-color 180ms ease;
+  }
+  &:hover img { transform: scale(1.08); border-color: var(--sprout); }
+}
+
+.ghost-cta {
+  padding: 9px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--canopy);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  transition: transform 160ms var(--ease-spring), box-shadow 160ms ease;
+  &:hover { transform: translateY(-1px); box-shadow: 0 8px 20px var(--clay-shadow-strong); }
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+
+  span {
+    width: 20px;
+    height: 2px;
+    background: var(--canopy);
+    border-radius: 2px;
+  }
+
+  @media (max-width: 760px) { display: flex; }
+}
+
+.mobile-menu {
+  display: none;
+
+  @media (max-width: 760px) {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 24px 18px;
+    gap: 4px;
+
+    a {
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      color: var(--soil);
+      &:hover { background: rgba(76, 139, 107, 0.10); }
+    }
+  }
+}
